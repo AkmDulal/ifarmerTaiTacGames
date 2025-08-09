@@ -12,7 +12,7 @@ export interface ProductData {
 
 export const fetchProducts = async (): Promise<Product[]> => {
   const response = await fetch(`${FAKE_STORE_API}/products`, {
-    next: { revalidate: 3600 } // Revalidate every hour
+    next: { revalidate: 3600 } 
   });
   if (!response.ok) {
     throw new Error('Failed to fetch products');
@@ -32,7 +32,7 @@ export const fetchProductById = async (id: number): Promise<Product> => {
 
 export const fetchCategories = async (): Promise<string[]> => {
   const response = await fetch(`${FAKE_STORE_API}/products/categories`, {
-    next: { revalidate: 86400 } // Revalidate daily
+    next: { revalidate: 86400 } 
   });
   if (!response.ok) {
     throw new Error('Failed to fetch categories');

@@ -47,7 +47,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           />
         </div>
 
-        {/* Product Info */}
+
         <div className="space-y-6">
           <div>
             <span className="text-sm text-gray-700 uppercase">{product.category}</span>

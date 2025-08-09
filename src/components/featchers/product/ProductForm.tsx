@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image"; 
 import { Product } from "@/store/features/products/types";
 import { createProduct, updateProduct } from "@/lib/api/products";
 import { useAppDispatch } from "@/store/hooks";
@@ -16,44 +17,52 @@ interface ProductFormProps {
   singleProduct?: Product;
 }
 
+const imageOptions = [
+  "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
+  "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.png",
+  "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_t.png",
+  "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_t.png",
+  "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png",
+  "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png",
+  "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_t.png",
+  "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_t.png",
+  "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_t.png",
+  "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_t.png",
+];
+
 const ProductForm: React.FC<ProductFormProps> = ({
   productId,
   singleProduct,
 }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const [product, setProduct] = useState<Partial<Product>>({
     title: "",
     price: 0,
     description: "",
-    image: "", // FakeStoreAPI only accepts a single image URL
-    category: "", // FakeStoreAPI expects a category name string, not an object
+    image: "",
+    category: "",
   });
+  const [selectedImage, setSelectedImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (productId) {
-      const loadProduct = async () => {
-        try {
-          setLoading(true);
-          if (singleProduct === undefined) return;
-          setProduct({
-            ...singleProduct,
-            // Ensure we have the right structure for FakeStoreAPI
-            image: singleProduct.image || "",
-            category: singleProduct.category || "",
-          });
-        } catch (error) {
-           console.log(error);
-          setError("Failed to load product");
-        } finally {
-          setLoading(false);
-        }
-      };
-      loadProduct();
+    if (productId && singleProduct) {
+      setLoading(true);
+      setProduct({
+        ...singleProduct,
+        image: singleProduct.image || "",
+        category: singleProduct.category || "",
+      });
+
+      if (singleProduct.image?.startsWith("https://fakestoreapi.com")) {
+        setSelectedImage(singleProduct.image);
+      }
+      setLoading(false);
     }
-  }, [productId]);
+  }, [productId, singleProduct]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -67,19 +76,24 @@ const ProductForm: React.FC<ProductFormProps> = ({
     }));
   };
 
+  const handleSelectImage = (url: string) => {
+    if (!url.startsWith("https://fakestoreapi.com")) return;
+    setSelectedImage(url);
+    setProduct((prev) => ({ ...prev, image: url }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      // Prepare the product data for FakeStoreAPI
       const productData = {
         title: product.title || "",
         price: product.price || 0,
         description: product.description || "",
         image: product.image || "",
-        category: product.category || "electronics", // Default category
+        category: product.category || "electronics",
       };
 
       if (productId) {
@@ -113,6 +127,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       )}
 
       <form className="product_form" onSubmit={handleSubmit}>
+ 
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Category</label>
           <select
@@ -166,12 +181,42 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Image URL</label>
+
+          <div className="grid grid-cols-7 gap-6 mb-3">
+            {imageOptions.map((url, index) => (
+              <div
+                key={index}
+                onClick={() => handleSelectImage(url)}
+                className={`cursor-pointer border rounded-md p-1 hover:border-blue-500 ${
+                  selectedImage === url
+                    ? "border-blue-500"
+                    : "border-gray-300"
+                }`}
+              >
+                <Image
+                  src={url}
+                  alt={`Option ${index}`}
+                  width={100}
+                  height={100}
+                  className="object-contain w-full h-24"
+                />
+              </div>
+            ))}
+          </div>
+
           <input
             type="text"
             name="image"
-            value={product.image || ""}
-            onChange={handleChange}
+            value={selectedImage}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val.startsWith("https://fakestoreapi.com")) {
+                setSelectedImage(val);
+                setProduct((prev) => ({ ...prev, image: val }));
+              }
+            }}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Select an image above or paste URL"
             required
           />
         </div>

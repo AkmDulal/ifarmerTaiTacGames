@@ -58,3 +58,8 @@ body {
 .product_form select {
   color: #222 !important;
 }
+
+.scrollbar-hidden {
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}

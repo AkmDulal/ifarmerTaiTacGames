@@ -34,7 +34,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     };
 
   return (
-    <div className="rounded-lg overflow-hidden">
+    <div className="rounded-lg w-full h-screen overflow-auto scrollbar-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
         <div className="relative h-96 w-full">
           <Image

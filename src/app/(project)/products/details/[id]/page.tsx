@@ -42,12 +42,13 @@ export default async function ProductDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
+
 }) {
   const { id } = await params; 
   const product = await fetchProductById(Number(id));
 
   return (
-    <div className="h-screen bg-gray-50 py-8">
+    <div className="w-full h-screen flex !scrollbar-hidden bg-gray-50 ">
       <div className="container mx-auto px-4">
         <ProductDetails product={product} />
       </div>

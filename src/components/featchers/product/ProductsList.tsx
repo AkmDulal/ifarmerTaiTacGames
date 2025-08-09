@@ -90,7 +90,7 @@ const ProductsList = ({
           <h1 className="text-2xl text-gray-700 font-bold">Products</h1>
           <Button
             onClick={() => router.push('/products/create-edit')}
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-[#193cb8] hover:bg-[#2854ee] cursor-pointer"
           >
             Add New Product
           </Button>

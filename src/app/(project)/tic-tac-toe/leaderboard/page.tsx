@@ -30,7 +30,7 @@ const LeaderboardPage = () => {
   return (
     <div className="min-h-screen games  bg-[#f0f0f0] flex flex-col items-center justify-center">
 
-      <div className=" w-[60%]  rounded-lg ">
+      <div className=" w-full md:w-[60%]  rounded-lg px-[15px]  ">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Leaderboard</h1>
           <div className="flex space-x-2">
@@ -73,7 +73,7 @@ const LeaderboardPage = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white divide-y divide-gray-200 w-full">
                   {leaderboard.map((player, index) => (
                     <tr key={player.id}>
                       <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">

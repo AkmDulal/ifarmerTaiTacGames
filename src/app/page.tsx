@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen games  bg-[#f0f0f0] flex flex-col items-center justify-center">
-      <div className=" w-[60%]  rounded-lg ">
+      <div className=" w-full md:w-[60%]  rounded-lg px-[15px] ">
         <div className="bg-white h-[20px] w-full "></div>
         <div className="bg-[#2a85f7] p-6">
           <h1 className="text-2xl  text-white font-bold text-center mb-6">

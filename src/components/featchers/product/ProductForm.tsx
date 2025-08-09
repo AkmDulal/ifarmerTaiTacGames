@@ -182,7 +182,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Image URL</label>
 
-          <div className="grid grid-cols-7 gap-6 mb-3">
+          <div className="grid grid-cols-7 gap-3 mb-3">
             {imageOptions.map((url, index) => (
               <div
                 key={index}
@@ -193,13 +193,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     : "border-gray-300"
                 }`}
               >
-                <Image
-                  src={url}
-                  alt={`Option ${index}`}
-                  width={100}
-                  height={100}
-                  className="object-contain w-full h-24"
-                />
+                <div className="relative w-full h-[50px] md:h-[100px]">
+        <Image
+          src={url}
+          alt={`Option ${index}`}
+          fill
+          className="object-contain"
+        />
+      </div>
               </div>
             ))}
           </div>

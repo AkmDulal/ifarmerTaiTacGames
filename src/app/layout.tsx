@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "React Developer Assignment",
+  title: "Tic-Tac-Toe Game",
   description: "Tic-Tac-Toe Game and CRUD Product App",
 };
 
